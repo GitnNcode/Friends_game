@@ -1,4 +1,7 @@
 let player;
+let ai=[];
+
+let linex=0;
 
 let pressedKeys = {};
 
@@ -11,13 +14,35 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  player = new Player(width/2, height/2);
+  player = new Player(width/2, 0);
+  for(let i=0; i<=4; i++){
+  ai[i]=new Ai(width-50,i*height/4)
+  }
 }
 
 function draw() {
+  frameRate(50)
   background(0);
+  for(i in ai){
+    ai[i].show()
+    ai[i].shootGraphics(linex)
+    player.collide(ai[i].lineX, ai[i].lineY, ai[i].lineH,-linex);
+    r=random(1)
+    if(r<=.5){
+      ai[i].y+=20
+    }else{
+      ai[i].y-=20
+    }
+  }
   player.update();
   player.draw();
+  if(linex>=width*1.5){
+    linex=0
+  }
+  else{
+    linex+=20
+  }
+  //noLoop()
 }
 
 function keyPressed() {
@@ -32,10 +57,23 @@ class Player {
   constructor(x, y) {
     this.x = x;
     this.y = y;
-    
+    this.width=100
+    this.height=100
     this.speed = 7;
   }
   
+  
+  collide(r2x,r2y,r2h,r2w){
+    //console.log(this.x,this.y,r2x,r2y,r2h,r2w)
+    if (
+        this.x+this.width > r2x + r2w
+        && this.x + this.width*2 < r2x
+        && this.y < r2y + r2h
+        && this.y + this.height > r2y
+        ) {
+      noLoop()
+    }
+  }
   update() {
     let mvmt = createVector(0, 0);
     
@@ -59,6 +97,6 @@ class Player {
   }
   
   draw() {
-    image(monkey, this.x, this.y, 100, 100)
+    image(monkey, this.x, this.y, this.width, this.height)
   }
 }
