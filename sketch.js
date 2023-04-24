@@ -1,5 +1,6 @@
 let player;
-let ai=[];
+//let ai=[];
+let enemy = [];
 
 let linex=0;
 
@@ -15,27 +16,38 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   player = new Player(width/2, 0);
-  for(let i=0; i<=4; i++){
-  ai[i]=new Ai(width-50,i*height/4)
+  // for(let i=0; i<=4; i++){
+  // ai[i]=new Ai(width-50,i*height/4)
+  // }
+  //enemy = new Enemy();
+  for(lasy[i]=new Enemy()
   }
 }
 
 function draw() {
   frameRate(50)
   background(0);
-  for(i in ai){
-    ai[i].show()
-    ai[i].shootGraphics(linex)
-    player.collide(ai[i].lineX, ai[i].lineY, ai[i].lineH,-linex);
-    r=random(1)
-    if(r<=.5){
-      ai[i].y+=20
-    }else{
-      ai[i].y-=20
-    }
-  }
+  // for(i in ai){
+  //   ai[i].show()
+  //   ai[i].shoot(linex)
+  //   player.collide(ai[i].lineX, ai[i].lineY, ai[i].lineH,-linex);
+  //   r=random(1)
+  //   if(r<=.5){
+  //     ai[i].y+=20
+  //   }else{
+  //     ai[i].y-=20
+  //   }
+  // }
   player.update();
   player.draw();
+    
+  for (i in enemy){
+    enemy[i].show();
+    enemy[i].follow(player.x, player.y);
+    
+  }
+  
+
   if(linex>=width*1.5){
     linex=0
   }
@@ -43,6 +55,7 @@ function draw() {
     linex+=20
   }
   //noLoop()
+
 }
 
 function keyPressed() {
@@ -94,9 +107,20 @@ class Player {
     
     this.x += mvmt.x;
     this.y += mvmt.y;
+
+    if(this.x < 0 || this.x+this.width>width){
+      this.x -= mvmt.x;
+    }
+
+    if(this.y < 0 || this.y + this.height > height ){
+      this.y -= mvmt.y;
+    }
   }
+
+ 
   
   draw() {
     image(monkey, this.x, this.y, this.width, this.height)
   }
 }
+
