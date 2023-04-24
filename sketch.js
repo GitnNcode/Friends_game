@@ -20,7 +20,8 @@ function setup() {
   // ai[i]=new Ai(width-50,i*height/4)
   // }
   //enemy = new Enemy();
-  for(lasy[i]=new Enemy()
+  for(let i=0; i<=5; i++){
+    enemy[1]= new Enemy()
   }
 }
 
