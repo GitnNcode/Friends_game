@@ -1,5 +1,5 @@
 class Enemy{
-    constructor(){a
+    constructor(){
         this.x = random(0, width);
         this.y = random(0, height);
         this.playerX = 0;
